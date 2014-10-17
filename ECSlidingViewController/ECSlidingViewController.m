@@ -863,6 +863,20 @@
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
+- (void)setTransitionInProgress:(BOOL)transitionInProgress
+{
+    _transitionInProgress = transitionInProgress;
+    
+    if (_transitionInProgress) {
+        [self.underLeftViewController.view setHidden:NO];
+        [self.underRightViewController.view setHidden:NO];
+    } else
+    {
+        [self.underLeftViewController.view setHidden:_currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered];
+        [self.underRightViewController.view setHidden:_currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered];
+    }
+}
+
 - (UIViewController *)viewControllerForKey:(NSString *)key {
     if ([key isEqualToString:ECTransitionContextTopViewControllerKey]) {
         return self.topViewController;
