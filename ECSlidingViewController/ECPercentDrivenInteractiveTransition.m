@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 #import "ECPercentDrivenInteractiveTransition.h"
+#import "ECSlidingConstants.h"
 
 @interface ECPercentDrivenInteractiveTransition ()
 @property (nonatomic, assign) id<UIViewControllerContextTransitioning> transitionContext;
@@ -66,7 +67,12 @@
 - (void)cancelInteractiveTransition {
     if (!self.isActive) return;
     
-    [self.transitionContext cancelInteractiveTransition];
+    [UIView animateWithDuration:0.1 animations:^{
+        UIViewController* topViewController = [self.transitionContext viewControllerForKey:ECTransitionContextTopViewControllerKey];
+        topViewController.view.frame = [self.transitionContext initialFrameForViewController:topViewController];
+    }completion:^(BOOL finished) {
+        [self.transitionContext cancelInteractiveTransition];
+    }];
     
     CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(reversePausedAnimation:)];
     [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
