@@ -67,12 +67,7 @@
 - (void)cancelInteractiveTransition {
     if (!self.isActive) return;
     
-    [UIView animateWithDuration:0.1 animations:^{
-        UIViewController* topViewController = [self.transitionContext viewControllerForKey:ECTransitionContextTopViewControllerKey];
-        topViewController.view.frame = [self.transitionContext initialFrameForViewController:topViewController];
-    }completion:^(BOOL finished) {
-        [self.transitionContext cancelInteractiveTransition];
-    }];
+    [self.transitionContext cancelInteractiveTransition];
     
     CADisplayLink *displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(reversePausedAnimation:)];
     [displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
@@ -93,6 +88,12 @@
     layer.beginTime = timeSincePause;
 }
 
+- (void)setStateAfterTransitionWasCancelled {
+    UIViewController *topViewController = [self.transitionContext viewControllerForKey:ECTransitionContextTopViewControllerKey];
+    topViewController.view.frame = [self.transitionContext initialFrameForViewController:topViewController];
+}
+
+
 #pragma mark - CADisplayLink action
 
 - (void)reversePausedAnimation:(CADisplayLink *)displayLink {
@@ -112,6 +113,8 @@
         CALayer *layer = [self.transitionContext containerView].layer;
         [layer removeAllAnimations];
         layer.speed = 1.0;
+        
+        [self setStateAfterTransitionWasCancelled];
     }
 }
 

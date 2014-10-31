@@ -61,4 +61,10 @@
  Causes the animation defined by the `animationController` to play from current `percentComplete` to 100 percent. You must call this method or `cancelInteractiveTransition` at some point during the interaction to ensure everything ends in a consistent state.
  */
 - (void)finishInteractiveTransition;
+
+/**
+ Method where user has to reset all animation but position when animation is cancelled
+ */
+- (void)setStateAfterTransitionWasCancelled;
+
 @end
