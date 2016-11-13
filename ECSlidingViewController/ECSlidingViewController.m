@@ -71,6 +71,9 @@
 @synthesize underLeftViewController=_underLeftViewController;
 @synthesize underRightViewController=_underRightViewController;
 
+@synthesize targetTransform = _targetTransform;
+@synthesize isInterruptible = _isInterruptible;
+
 #pragma mark - Constructors
 
 + (instancetype)slidingWithTopViewController:(UIViewController *)topViewController {
@@ -114,6 +117,8 @@
 #pragma mark - UIViewController
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
+    
     if (self.topViewControllerStoryboardId) {
         self.topViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.topViewControllerStoryboardId];
     }
@@ -797,6 +802,10 @@
 
 - (BOOL)transitionWasCancelled {
     return _transitionWasCancelled;
+}
+
+- (UIView *)viewForKey:(UITransitionContextViewKey)key {
+    return nil;
 }
 
 - (UIModalPresentationStyle)presentationStyle {
