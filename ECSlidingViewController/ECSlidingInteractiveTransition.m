@@ -90,19 +90,10 @@
         }
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled: {
-            BOOL isPanningRight = velocityX > 0;
             
             if (self.coordinatorInteractionEnded) self.coordinatorInteractionEnded((id<UIViewControllerTransitionCoordinatorContext>)self.slidingViewController);
             
-            if (isPanningRight && self.positiveLeftToRight) {
-                [self finishInteractiveTransition];
-            } else if (isPanningRight && !self.positiveLeftToRight) {
-                [self cancelInteractiveTransition];
-            } else if (!isPanningRight && self.positiveLeftToRight) {
-                [self cancelInteractiveTransition];
-            } else if (!isPanningRight && !self.positiveLeftToRight) {
-                [self finishInteractiveTransition];
-            }
+            [self finishInteractiveTransition];
             
             break;
         }
