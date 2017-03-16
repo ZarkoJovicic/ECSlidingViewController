@@ -40,6 +40,11 @@ static NSString *const ECTransitionContextUnderLeftControllerKey = @"ECTransitio
 static NSString *const ECTransitionContextUnderRightControllerKey = @"ECTransitionContextUnderRightControllerKey";
 
 /**
+ This constant defines percent of how much user needs to preview menu in order to open it fully after he finishes operation (release it)
+ */
+static CGFloat const ECPercentOfMenuToBePreviewedInOrderToOpenItFully = 50.0;
+
+/**
  These constants define the type of sliding view controller transitions that can occur.
  */
 typedef NS_ENUM(NSInteger, ECSlidingViewControllerOperation) {
