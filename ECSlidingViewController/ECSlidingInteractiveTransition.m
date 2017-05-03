@@ -93,7 +93,12 @@
             
             if (self.coordinatorInteractionEnded) self.coordinatorInteractionEnded((id<UIViewControllerTransitionCoordinatorContext>)self.slidingViewController);
             
-            CGFloat percentComplete = (translationX / self.fullWidth) * 100;
+            if (!self.positiveLeftToRight) {
+                
+                translationX -= self.slidingViewController.anchorRightPeekAmount / 2;
+            }
+            
+            CGFloat percentComplete = fabs(translationX / self.fullWidth) * 100;
             if (percentComplete < ECPercentOfMenuToBePreviewedInOrderToOpenItFully) {
                 
                 [self cancelInteractiveTransition];
